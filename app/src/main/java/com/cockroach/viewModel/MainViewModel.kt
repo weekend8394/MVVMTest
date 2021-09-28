@@ -26,8 +26,7 @@ class MainViewModel @Inject constructor(
     var toastMessage: String? by bindingProperty(null)
         private set
 
-    private val pokemonFetchingIndex: MutableStateFlow<Int> = MutableStateFlow(0)
-    fun getData() = launch(Dispatchers.Main) {
+    suspend fun getData() {
         Timber.e("456")
         mainRepository.fetchPokemonList(
             page = 0,
@@ -41,37 +40,12 @@ class MainViewModel @Inject constructor(
                 toastMessage = it
             }
         ).collect {
-            Timber.w(Gson().toJson(it))
-        }
-    }
-
-    suspend fun getData2() {
-        delay(1000)
-        Timber.e("456")
-        mainRepository.fetchPokemonList(
-            page = 0,
-            onStart = {
-                isLoading = true
-            },
-            onComplete = {
-                isLoading = false
-            },
-            onError = {
-                toastMessage = it
-            }
-        ).collect {
+            Timber.e("789")
             Timber.w(Gson().toJson(it))
         }
     }
 
     init {
         Timber.d("init MainViewModel")
-    }
-
-    @MainThread
-    fun fetchNextPokemonList() {
-        if (!isLoading) {
-            pokemonFetchingIndex.value++
-        }
     }
 }

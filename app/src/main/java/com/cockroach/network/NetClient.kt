@@ -15,14 +15,6 @@ class NetClient @Inject constructor(
             offset = page * PAGING_SIZE
         )
 
-    suspend fun fetchPokemonInfo(
-        name: String
-    ): ApiResponse<PokemonInfo> =
-        myService.fetchPokemonInfo(
-            name = name
-        )
-
-
     companion object {
         private const val PAGING_SIZE = 20
     }

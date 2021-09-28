@@ -33,14 +33,11 @@ class MainRepository @Inject constructor(
             }
             emit(pokemonArr)
         }
-            // handles the case when the API request gets an error response.
-            // e.g., internal server error.
             .onError {
-                /** maps the [ApiResponse.Failure.Error] to the [PokemonErrorResponse] using the mapper. */
-                map(ErrorResponseMapper) { onError("[Code: $code]: $message") }
+                map(ErrorResponseMapper) {
+                    onError("[Code: $code]: $message")
+                }
             }
-            // handles the case when the API request gets an exception response.
-            // e.g., network connection error.
             .onException { onError(message) }
     }.onStart {
         onStart()
